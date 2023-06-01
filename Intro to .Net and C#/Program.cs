@@ -1,6 +1,19 @@
 ﻿void findRepeatElems(int[] numsArray)
 {
+    List<int> repeatedNums = new List<int>();
 
+    for (int i = 0; i < numsArray.Length; i++)
+    {
+        if (Array.IndexOf(numsArray, numsArray[i]) != i)
+        {
+            repeatedNums.Add(numsArray[i]);
+        }
+    }
+
+    string joined = string.Join(", ", repeatedNums.ToArray());
+
+    Console.WriteLine("The repeated numbers in the provided array are:");
+    Console.WriteLine(joined);
 }
 
 int[] repearArr = { 1, 2, 3, 4, 7, 9, 2, 4 };
