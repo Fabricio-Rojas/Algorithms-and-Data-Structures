@@ -75,9 +75,26 @@ Console.WriteLine(HighestGrade(list2));
 
 List<int> OrderByLooping(List<int> list)
 {
+    for (int i = list.Count; i > 0; i--)
+    {
+        for (int j  = 0; j < i - 1; j++)
+        {
+            if (list[j] > list[j + 1])
+            {
+                int holdNum = list[j];
+                list[j] = list[j + 1];
+                list[j + 1] = holdNum;
+            }
+        }
+    }
+
     return list;
 };
-// Time Complexity: 
+// Time Complexity: 0(n^2)
 
 List<int> list3 = new List<int> { 6, -2, 5, 3 };
 OrderByLooping(list3);
+
+List<int> result2 = OrderByLooping(list3);
+
+Console.WriteLine(string.Join(", ", result2));
