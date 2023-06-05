@@ -9,6 +9,7 @@
 
 Queue<string> songQueue = new Queue<string>();
 bool appActive = true;
+string songNowPlaying = "";
 
 while (appActive)
 {
@@ -59,47 +60,51 @@ void handleCase1()
 }
 void handleCase2()
 {
-    Console.WriteLine($"Now playing: '{songQueue.Peek()}'");
-    songQueue.Dequeue();
-    Console.WriteLine("Next song: '{0}'", songQueue.TryPeek(out string? result) ? songQueue.Peek() : "none queued");
+    if (songQueue.TryPeek(out string? result1))
+    {
+        songNowPlaying = songQueue.Dequeue();
+    }
+    else
+    {
+        Console.WriteLine("No more songs left in queue");
+    }
+    Console.WriteLine($"Now playing: '{songNowPlaying}'");
+    Console.WriteLine("Next song: '{0}'", songQueue.TryPeek(out string? result2) ? songQueue.Peek() : "none queued");
     Console.WriteLine();
 }
 void handleCase3()
 {
     string secondSongName = "";
-    while (songQueue.Count >= 2)
+    if (songQueue.TryPeek(out string? result1))
     {
-        Queue<string> tempQueue = new Queue<string>();
-
-        string firstItem = songQueue.Dequeue();
-        tempQueue.Enqueue(firstItem);
-
-        secondSongName = songQueue.Peek();
-
-        if (tempQueue.Count > 1)
-        {
-            secondSongName = songQueue.Dequeue();
-        }
-
-        while (tempQueue.Count > 0)
-        {
-            string item = tempQueue.Dequeue();
-            songQueue.Enqueue(item);
-        }
+        secondSongName = songQueue.Dequeue();
     }
-    Console.WriteLine($"Skipped the song '{secondSongName}'");
-    Console.WriteLine("Now playing: ''");
-    Console.WriteLine("Next song: ''");
+    else
+    {
+        Console.WriteLine("No more songs left to skip");
+    }
+    Console.WriteLine("Skipped the song '{0}'", secondSongName.Length > 0 ? secondSongName : "none");
+    Console.WriteLine($"Now playing: '{songNowPlaying}'");
+    Console.WriteLine("Next song: '{0}'", songQueue.TryPeek(out string? result2) ? songQueue.Peek() : "none queued");
     Console.WriteLine();
 }
 void handleCase4()
 {
-    Console.WriteLine("Rewound the song ''");
-    Console.WriteLine("Now playing: ''");
-    Console.WriteLine("Next song: ''");
+    Console.WriteLine($"Rewound the song '{songNowPlaying}'");
+    Console.WriteLine($"Now playing: '{songNowPlaying}'");
+    Console.WriteLine("Next song: '{0}'", songQueue.TryPeek(out string? result) ? songQueue.Peek() : "none queued");
     Console.WriteLine();
 }
 void handleCase5()
 {
     appActive = false;
 }
+
+/*
+ * List<string> words
+ * HashSet<char> Characters
+ * store as a string the amount of times a character appears in a sentence
+ * "Banana", "apple" -> "a: 4", "b: 1", etc.
+ * The result strings should be stored in another list: 
+ * List<string> charCount
+ */
