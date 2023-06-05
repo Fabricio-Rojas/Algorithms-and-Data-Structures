@@ -7,33 +7,99 @@
     Console.WriteLine("5. Exit");
 }
 
-while (true)
+Queue<string> songQueue = new Queue<string>();
+bool appActive = true;
+
+while (appActive)
 {
     showOptions();
 
-    if (Int32.TryParse(Console.ReadLine(), out var value))
-    {
+    string response = Console.ReadLine();
+    Console.Clear();
 
+    while (!Int32.TryParse(response, out int value) || Int32.Parse(response) <= 0 || Int32.Parse(response) > 5)
+    {
+        Console.Clear();
+        showOptions();
+        Console.WriteLine();
+        Console.WriteLine("Please input a number that matches one of the options!");
+        response = Console.ReadLine();
     }
 
-    int response = Int32.Parse(Console.ReadLine());
+    int selectedOption = Int32.Parse(response);
 
-    switch (response)
+    switch (selectedOption)
     {
         case 1:
-            Console.WriteLine();
+            handleCase1();
             break;
         case 2:
-            Console.WriteLine();
+            handleCase2();
             break;
         case 3:
-            Console.WriteLine();
+            handleCase3();
             break;
         case 4:
-            Console.WriteLine();
+            handleCase4();
             break;
         case 5:
-            Console.WriteLine();
+            handleCase5();
             break;
     }
+}
+
+void handleCase1()
+{
+    Console.Write("Enter song name: ");
+    string newSongName = Console.ReadLine();
+    songQueue.Enqueue(newSongName);
+    Console.WriteLine($"'{newSongName}' added to your playlist.");
+    Console.WriteLine($"Next song: '{songQueue.Peek()}'");
+    Console.WriteLine();
+}
+void handleCase2()
+{
+    Console.WriteLine($"Now playing: '{songQueue.Peek()}'");
+    songQueue.Dequeue();
+    Console.WriteLine("Next song: '{0}'", songQueue.TryPeek(out string? result) ? songQueue.Peek() : "none queued");
+    Console.WriteLine();
+}
+void handleCase3()
+{
+    string secondSongName = "";
+    while (songQueue.Count >= 2)
+    {
+        Queue<string> tempQueue = new Queue<string>();
+
+        string firstItem = songQueue.Dequeue();
+        tempQueue.Enqueue(firstItem);
+
+        secondSongName = songQueue.Peek();
+
+        if (tempQueue.Count > 1)
+        {
+            secondSongName = songQueue.Dequeue();
+        }
+
+        while (tempQueue.Count > 0)
+        {
+            string item = tempQueue.Dequeue();
+            songQueue.Enqueue(item);
+        }
+    }
+    Console.WriteLine($"Skipped the song '{secondSongName}'");
+    Console.WriteLine("Now playing: ''");
+    Console.WriteLine("Next song: ''");
+    Console.WriteLine();
+}
+void handleCase4()
+{
+    Console.WriteLine("Rewound the song ''");
+    Console.WriteLine("Now playing: ''");
+    Console.WriteLine("Next song: ''");
+    Console.WriteLine();
+}
+void handleCase5()
+{
+    appActive = false;
 }
