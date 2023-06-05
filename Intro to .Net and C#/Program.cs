@@ -99,12 +99,3 @@ void handleCase5()
 {
     appActive = false;
 }
-
-/*
- * List<string> words
- * HashSet<char> Characters
- * store as a string the amount of times a character appears in a sentence
- * "Banana", "apple" -> "a: 4", "b: 1", etc.
- * The result strings should be stored in another list: 
- * List<string> charCount
- */
